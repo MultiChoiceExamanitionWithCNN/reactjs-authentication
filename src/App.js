@@ -39,12 +39,19 @@ class App extends Component {
     })
       .then(res => res.json())
       .then(json => {
-        localStorage.setItem('token', json.token);
-        this.setState({
-          logged_in: true,
-          displayed_form: '',
-          username: json.user.username
-        });
+        console.log(json.token);
+        if(json.token){
+          localStorage.setItem('token', json.token);
+          this.setState({
+            logged_in: true,
+            displayed_form: '',
+            username: json.user.username
+          });
+        }
+        else{
+          alert("ชื่อผู้เข้าใช้งาน หรือ รหัสผ่านไม่ถูกต้อง");
+          console.log("ชื่อผู้เข้าใช้งาน หรือ รหัสผ่านไม่ถูกต้อง");
+        }
       });
   };
 
@@ -59,6 +66,7 @@ class App extends Component {
     })
       .then(res => res.json())
       .then(json => {
+        //console.log(json);
         localStorage.setItem('token', json.token);
         this.setState({
           logged_in: true,
@@ -102,8 +110,8 @@ class App extends Component {
         {form}
         <h3>
           {this.state.logged_in
-            ? `Hello, ${this.state.username}`
-            : 'Please Log In'}
+            ? `${this.state.username}`
+            : 'กรุณาเข้าสู่ระบบ'}
         </h3>
       </div>
     );
