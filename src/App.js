@@ -16,7 +16,7 @@ class App extends Component {
 
   componentDidMount() {
     if (this.state.logged_in) {
-      fetch('http://localhost:8000/core/current_user/', {
+      fetch('https://dj-auth-jwt.herokuapp.com/core/current_user/', {
         headers: {
           Authorization: `JWT ${localStorage.getItem('token')}`
         }
@@ -30,7 +30,7 @@ class App extends Component {
 
   handle_login = (e, data) => {
     e.preventDefault();
-    fetch('http://localhost:8000/token-auth/', {
+    fetch('https://dj-auth-jwt.herokuapp.com/token-auth/', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -47,7 +47,9 @@ class App extends Component {
             displayed_form: '',
             username: json.user.username
           });
+
         }
+
         else{
           alert("ชื่อผู้เข้าใช้งาน หรือ รหัสผ่านไม่ถูกต้อง");
           console.log("ชื่อผู้เข้าใช้งาน หรือ รหัสผ่านไม่ถูกต้อง");
@@ -57,7 +59,8 @@ class App extends Component {
 
   handle_signup = (e, data) => {
     e.preventDefault();
-    fetch('http://localhost:8000/core/users/', {
+    console.log("data is " + data)
+    fetch('https://dj-auth-jwt.herokuapp.com/core/users/', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -108,11 +111,8 @@ class App extends Component {
           handle_logout={this.handle_logout}
         />
         {form}
-        <h3>
-          {this.state.logged_in
-            ? `${this.state.username}`
-            : 'กรุณาเข้าสู่ระบบ'}
-        </h3>
+        {this.state.logged_in ? `${this.state.username}`:''}
+        
       </div>
     );
   }
